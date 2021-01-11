@@ -16,6 +16,9 @@
         
         <div id="divInfo" class="row">
             <div class="col-12">
+                
+                <button class="btn btn-primary" id="btnBack">Back</button>
+                <hr>
                 <span id="demo1">
 
                 </span>
@@ -23,8 +26,8 @@
                 <span id="demo2">
 
                 </span>
-                <hr>
-                <button onclick=" btnBack_click" class="btn btn-primary" id="btnBack">Back</button>
+                
+                
             </div>
         </div>
 
@@ -78,11 +81,17 @@
              var url ="https://jsonplaceholder.typicode.com/posts/"+id;
                 $.getJSON(url)
                     .done((data)=>{
-                        $("#demo1").text(JSON.stringify(data))
-                        var url2 = "https://jsonplaceholder.typicode.com/posts/"+id+"/comments";
+                        console.log(data)
+                        $.get(data,(item)=>{
+                            console.log(item)
+                        var tline = "<p>"+item.title+"</p>"
+                            $("#demo1").append(tline);
+                    })       
+                            var url2 = "https://jsonplaceholder.typicode.com/posts/"+id+"/comments";
+                   
                         $.getJSON(url2)
                             .done((data)=>{
-                                $("#demo2").text(JSON.stringify(data))
+                                $("#demo2").text(data)
                             })
                             .fail((xhr, status, err)=>{
                                 console.log("error")
@@ -99,7 +108,7 @@
         $(()=>{
             $("#divInfo").hide();
             loadJSONArray();
-
+            $("#btnBack").click(btnBack_click);
             
         });
         
